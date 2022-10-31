@@ -5,7 +5,6 @@ public class Constants {
     public enum ExceptionClass{
 
         USER("User"), NOTE("Note"), EVENT("Event");
-
         private String exceptionClasses;
 
         ExceptionClass(String exceptionClass) {
