@@ -22,11 +22,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto saveUser(String username, String password, String email) {
+    public UserDto saveUser(String username, String password, String email, String roles) {
 
-        UserEntity userEntity = new UserEntity(username, passwordEncoder.encode(password), email);
+        UserEntity userEntity = new UserEntity(username, passwordEncoder.encode(password), email, roles);
         UserEntity saved = userRepository.save(userEntity);
-        UserDto userDto = new UserDto(saved.getUsername(), saved.getPassword(), saved.getEmail());
+        UserDto userDto = new UserDto(saved.getUsername(), saved.getPassword(), saved.getEmail(), saved.getRoles());
         return userDto;
     }
 
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     public UserDto getUser(String username) {
         UserEntity userEntity = userRepository.getById(username);
 
-        UserDto userDto = new UserDto(userEntity.getUsername(), userEntity.getPassword(), userEntity.getEmail());
+        UserDto userDto = new UserDto(userEntity.getUsername(), passwordEncoder.encode(userEntity.getPassword()), userEntity.getEmail(), userEntity.getRoles());
 
         return userDto;
     }

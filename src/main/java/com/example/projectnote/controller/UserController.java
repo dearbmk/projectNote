@@ -31,23 +31,24 @@ public class UserController {
         LOGGER.info("[UserController perform {} of projectnote API", "myAccount");
         UserDto userDto = userService.getUser(username);
 
-        LOGGER.info("[UserController] response :: username = {}, userPwd = {}, userEmail = {}, Response Time = {}ms",
-                userDto.getUsername(), userDto.getUserPassword(), userDto.getUserEmail(), (System.currentTimeMillis()-startTime));
+        LOGGER.info("[UserController] response :: username = {}, userPwd = {}, userEmail = {}, userRoles = {}, Response Time = {}ms",
+                userDto.getUsername(), userDto.getUserPassword(), userDto.getUserEmail(), userDto.getRoles(), (System.currentTimeMillis()-startTime));
         return userDto.toString();
     }
 
     @PostMapping("/register")
     public String register(@RequestParam String username,
                            @RequestParam String password,
-                           @RequestParam String email) {
+                           @RequestParam String email,
+                           @RequestParam String roles) {
 
-        UserDto userDto = userService.saveUser(username, password, email);
+        UserDto userDto = userService.saveUser(username, password, email, roles);
         return userDto.toString();
     }
 
     @PostMapping("registration")
     public String registration(@Valid @RequestBody UserDto userDto) { //JSON type information
-        return userService.saveUser(userDto.getUsername(), userDto.getUserPassword(), userDto.getUserEmail()).toString();
+        return userService.saveUser(userDto.getUsername(), userDto.getUserPassword(), userDto.getUserEmail(), userDto.getRoles()).toString();
     }
 
     @DeleteMapping(value = "userInfo/delete/{username}")
